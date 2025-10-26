@@ -80,6 +80,151 @@ export default async function ActivityDemoPage() {
           </div>
         </section>
 
+        {/* Timeline Section */}
+        <section className="mb-8 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-900 dark:bg-blue-950">
+          <h2 className="mb-4 text-xl font-semibold text-blue-900 dark:text-blue-50">
+            ⏱️ レンダリング・データ取得のタイムライン
+          </h2>
+
+          <div className="space-y-6 text-sm">
+            {/* Timeline Visualization */}
+            <div className="rounded-lg bg-white p-4 dark:bg-blue-900">
+              <div className="space-y-4">
+                {/* 0ms */}
+                <div className="flex items-start gap-4">
+                  <div className="w-20 shrink-0 font-mono text-xs font-semibold text-blue-700 dark:text-blue-300">
+                    0ms
+                  </div>
+                  <div className="flex-1">
+                    <div className="mb-2 font-semibold text-blue-900 dark:text-blue-100">
+                      📡 リクエスト受信・データ取得開始
+                    </div>
+                    <div className="space-y-1 text-blue-800 dark:text-blue-200">
+                      <div>🔵 サーバー: fetchUsers() 開始（1秒）</div>
+                      <div>🔵 サーバー: fetchPosts() 開始（1.5秒）</div>
+                      <div>🔵 サーバー: fetchAlbums() 開始（2秒）</div>
+                      <div className="mt-2 rounded bg-blue-100 p-2 dark:bg-blue-800">
+                        ✅ ブラウザ: 初期HTML受信・表示（Loading状態）
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 1000ms */}
+                <div className="flex items-start gap-4">
+                  <div className="w-20 shrink-0 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+                    1000ms
+                  </div>
+                  <div className="flex-1">
+                    <div className="mb-2 font-semibold text-emerald-900 dark:text-emerald-100">
+                      ✨ Usersデータ完了
+                    </div>
+                    <div className="space-y-1 text-emerald-800 dark:text-emerald-200">
+                      <div>🟢 サーバー: UsersTabのHTML生成</div>
+                      <div>🟢 サーバー: ストリーミングで送信</div>
+                      <div className="mt-2 rounded bg-emerald-100 p-2 dark:bg-emerald-800">
+                        ✅ ブラウザ: <strong>Usersタブに実データ表示</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 1500ms */}
+                <div className="flex items-start gap-4">
+                  <div className="w-20 shrink-0 font-mono text-xs font-semibold text-purple-700 dark:text-purple-300">
+                    1500ms
+                  </div>
+                  <div className="flex-1">
+                    <div className="mb-2 font-semibold text-purple-900 dark:text-purple-100">
+                      ✨ Postsデータ完了
+                    </div>
+                    <div className="space-y-1 text-purple-800 dark:text-purple-200">
+                      <div>🟣 サーバー: PostsTabのHTML生成</div>
+                      <div>🟣 サーバー: ストリーミングで送信</div>
+                      <div className="mt-2 rounded bg-purple-100 p-2 dark:bg-purple-800">
+                        ✅ ブラウザ: PostsタブDOM追加（display: none）
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2000ms */}
+                <div className="flex items-start gap-4">
+                  <div className="w-20 shrink-0 font-mono text-xs font-semibold text-amber-700 dark:text-amber-300">
+                    2000ms
+                  </div>
+                  <div className="flex-1">
+                    <div className="mb-2 font-semibold text-amber-900 dark:text-amber-100">
+                      ✨ Albumsデータ完了
+                    </div>
+                    <div className="space-y-1 text-amber-800 dark:text-amber-200">
+                      <div>🟡 サーバー: AlbumsTabのHTML生成</div>
+                      <div>🟡 サーバー: ストリーミングで送信</div>
+                      <div className="mt-2 rounded bg-amber-100 p-2 dark:bg-amber-800">
+                        ✅ ブラウザ: AlbumsタブDOM追加（display: none）
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Key Points */}
+            <div className="rounded-lg border border-blue-300 bg-blue-100 p-4 dark:border-blue-700 dark:bg-blue-900">
+              <div className="mb-2 font-semibold text-blue-900 dark:text-blue-100">
+                🎯 重要なポイント
+              </div>
+              <ul className="space-y-2 text-blue-800 dark:text-blue-200">
+                <li>
+                  <strong>並列実行:</strong> 3つのfetchは同時に開始（1秒+1.5秒+2秒=4.5秒ではない！）
+                </li>
+                <li>
+                  <strong>即座に表示:</strong> 初期HTMLは0msで送信、ユーザーはすぐに画面を見られる
+                </li>
+                <li>
+                  <strong>段階的更新:</strong> 各タブのデータが完了次第、ストリーミングで送信
+                </li>
+                <li>
+                  <strong>サーバー側取得:</strong> すべてのfetchはサーバー側、クライアントは受け取るだけ
+                </li>
+              </ul>
+            </div>
+
+            {/* Comparison */}
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="rounded-lg border border-red-300 bg-red-50 p-4 dark:border-red-700 dark:bg-red-950">
+                <div className="mb-2 font-semibold text-red-900 dark:text-red-100">
+                  ❌ もしawaitしていたら
+                </div>
+                <div className="space-y-1 text-xs text-red-800 dark:text-red-200">
+                  <div>0ms: リクエスト受信</div>
+                  <div>1000ms: Users完了（待機）</div>
+                  <div>2500ms: Posts完了（待機）</div>
+                  <div>4500ms: Albums完了（待機）</div>
+                  <div className="mt-2 rounded bg-red-100 p-2 font-semibold dark:bg-red-900">
+                    ⏰ 4.5秒後にやっと表示
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-green-300 bg-green-50 p-4 dark:border-green-700 dark:bg-green-950">
+                <div className="mb-2 font-semibold text-green-900 dark:text-green-100">
+                  ✅ 現在の実装（Promise渡し）
+                </div>
+                <div className="space-y-1 text-xs text-green-800 dark:text-green-200">
+                  <div>0ms: 初期HTML表示</div>
+                  <div>1000ms: Users表示</div>
+                  <div>1500ms: Posts準備完了</div>
+                  <div>2000ms: Albums準備完了</div>
+                  <div className="mt-2 rounded bg-green-100 p-2 font-semibold dark:bg-green-900">
+                    ⚡ 1秒で表示開始！
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Tabs Demo with Activity */}
         <section className="rounded-lg border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
           <div className="mb-6 flex items-center justify-between">
