@@ -108,6 +108,60 @@ export default function ServerActionsPage() {
           </section>
         </div>
 
+        {/* Other Examples */}
+        <section className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Link
+            href="/server-actions/next-safe-action"
+            className="group block rounded-lg border border-blue-200 bg-blue-50 p-6 transition-all hover:border-blue-300 hover:shadow-lg dark:border-blue-900 dark:bg-blue-950 dark:hover:border-blue-700"
+          >
+            <h3 className="mb-2 text-xl font-semibold text-blue-900 dark:text-blue-50">
+              next-safe-action + RHF
+            </h3>
+            <p className="text-sm text-blue-700 dark:text-blue-300">
+              型安全なServer Actionsとリアルタイムバリデーション
+            </p>
+            <ul className="mt-4 space-y-1 text-xs text-blue-600 dark:text-blue-400">
+              <li>✅ 型安全</li>
+              <li>✅ useActionフック</li>
+              <li>✅ 複雑なフォーム向け</li>
+            </ul>
+          </Link>
+
+          <Link
+            href="/server-actions/react-hook-form"
+            className="group block rounded-lg border border-green-200 bg-green-50 p-6 transition-all hover:border-green-300 hover:shadow-lg dark:border-green-900 dark:bg-green-950 dark:hover:border-green-700"
+          >
+            <h3 className="mb-2 text-xl font-semibold text-green-900 dark:text-green-50">
+              RHF + Server Actions
+            </h3>
+            <p className="text-sm text-green-700 dark:text-green-300">
+              シンプルにreact-hook-formとServer Actionsを組み合わせる
+            </p>
+            <ul className="mt-4 space-y-1 text-xs text-green-600 dark:text-green-400">
+              <li>✅ シンプル</li>
+              <li>✅ リアルタイムバリデーション</li>
+              <li>✅ useTransition</li>
+            </ul>
+          </Link>
+
+          <Link
+            href="/server-actions/conform"
+            className="group block rounded-lg border border-purple-200 bg-purple-50 p-6 transition-all hover:border-purple-300 hover:shadow-lg dark:border-purple-900 dark:bg-purple-950 dark:hover:border-purple-700"
+          >
+            <h3 className="mb-2 text-xl font-semibold text-purple-900 dark:text-purple-50">
+              Conform
+            </h3>
+            <p className="text-sm text-purple-700 dark:text-purple-300">
+              プログレッシブエンハンスメントとアクセシビリティ重視
+            </p>
+            <ul className="mt-4 space-y-1 text-xs text-purple-600 dark:text-purple-400">
+              <li>✅ JS無効でも動作</li>
+              <li>✅ アクセシビリティ対応</li>
+              <li>✅ サーバー優先</li>
+            </ul>
+          </Link>
+        </section>
+
         {/* Explanation */}
         <section className="mt-8 rounded-lg border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
           <h3 className="mb-3 text-xl font-semibold text-emerald-900 dark:text-emerald-50">
