@@ -54,8 +54,9 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </span>
             </div>
             <p className="mb-6 text-sm text-zinc-600 dark:text-zinc-400">
-              &quot;use cache&quot;ディレクティブを使用したコンポーネント。new Date()のような動的な値も含めて、
-              関数の返り値全体がキャッシュされます（デフォルトで15分間）。
+              unstable_cacheを使用したコンポーネント。new Date()のような動的な値を含む場合、
+              &quot;use cache&quot;では本番環境でキャッシュが無効化されることがあるため、
+              確実にキャッシュするにはunstable_cacheを使用します（15分間）。
             </p>
             <DataErrorBoundary title="Users">
               <Suspense
@@ -121,18 +122,27 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">1. &quot;use cache&quot;ディレクティブ（推奨）:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">1. &quot;use cache&quot;ディレクティブ（基本的な使い方）:</strong>
               <p className="ml-4 text-sm">
                 Next.js 16で正式リリースされたキャッシュAPI。
                 <strong>ファイルの先頭に配置すると、そのファイル内のすべてのエクスポートがキャッシュされます。</strong>
-                関数やコンポーネント単位でも使用可能。デフォルトで15分間キャッシュされます。
-                <strong>重要：new Date()のような動的な値も、&quot;use cache&quot;内で使用すれば、
-                初回実行時の値がキャッシュされます。</strong>
-                最もシンプルな使い方は、ファイル先頭に&quot;use cache&quot;を配置するだけです。
+                デフォルトで15分間キャッシュされます。
+                <strong className="text-red-600 dark:text-red-400">注意：new Date()のような動的な値を含む場合、
+                本番環境でキャッシュが無効化されることがあります。</strong>
+                動的な値を含まないシンプルなデータフェッチに適しています。
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">2. cache: &apos;no-store&apos;（動的データ）:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">2. unstable_cache（動的な値を含む場合）:</strong>
+              <p className="ml-4 text-sm">
+                関数レベルのキャッシュAPI。revalidateオプションでキャッシュ期間を指定でき（秒単位）、tagsオプションで手動再検証も可能。
+                <strong>重要：new Date()のような動的な値を含む場合でも、関数全体がキャッシュされるため、
+                本番環境でも確実にキャッシュされます。</strong>
+                データと取得時刻を一緒にキャッシュしたい場合など、動的な値を含むケースではこちらを使用してください。
+              </p>
+            </div>
+            <div>
+              <strong className="text-emerald-800 dark:text-emerald-200">3. cache: &apos;no-store&apos;（動的データ）:</strong>
               <p className="ml-4 text-sm">
                 fetchオプションでキャッシュを完全に無効化します。ユーザー固有のTodosのような動的データに適しています。
                 cacheComponents: true の環境では、デフォルトでキャッシュされないため、
@@ -140,20 +150,12 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">3. cacheLife()とcacheTag()（オプション）:</strong>
-              <p className="ml-4 text-sm">
-                &quot;use cache&quot;と組み合わせて使用。cacheLife()でキャッシュ期間をカスタマイズ
-                （&quot;seconds&quot;、&quot;minutes&quot;、&quot;hours&quot;、&quot;days&quot;、&quot;weeks&quot;など）。
-                cacheTag()でタグを付与し、revalidateTag()で手動再検証が可能です。
-                省略した場合はデフォルトで15分間キャッシュされます。
-              </p>
-            </div>
-            <div>
               <strong className="text-emerald-800 dark:text-emerald-200">4. 動的関数の制限:</strong>
               <p className="ml-4 text-sm">
-                &quot;use cache&quot;内では、cookies()、headers()などのNext.jsの動的関数は使用できません。
+                &quot;use cache&quot;やunstable_cache内では、cookies()、headers()などのNext.jsの動的関数は使用できません。
                 これらはリクエストごとに異なる値を持つため、キャッシュと相性が悪く、エラーになります。
-                new Date()などのJavaScript標準の動的な値は検出されないため、意図的に使う場合は注意が必要です。
+                ユーザー固有のデータが必要な場合は、動的な値をキャッシュの外で取得し、引数として渡すか、
+                キャッシュを使わない方法を検討してください。
               </p>
             </div>
           </div>

@@ -1,6 +1,4 @@
-// ファイルの先頭に"use cache"を配置すると、
-// このファイル内のすべてのエクスポートがキャッシュされる
-"use cache";
+import { unstable_cache } from "next/cache";
 
 type User = {
   id: number;
@@ -16,29 +14,38 @@ type CachedUsersData = {
   fetchedAt: string;
 };
 
-// "use cache"のみでシンプルにキャッシュ（デフォルトで15分間）
-async function getCachedUsersWithTimestamp(): Promise<CachedUsersData> {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+// unstable_cacheを使用してデータと取得時刻を一緒にキャッシュ
+// 重要: new Date()のような動的な値を含む場合、"use cache"では本番環境で
+// キャッシュが無効化されることがあるため、unstable_cacheを使用します
+const getCachedUsersWithTimestamp = unstable_cache(
+  async (): Promise<CachedUsersData> => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch users");
+    if (!res.ok) {
+      throw new Error("Failed to fetch users");
+    }
+
+    const users = await res.json();
+
+    // unstable_cache内では、new Date()を含む関数全体がキャッシュされるため、
+    // 初回実行時の時刻が15分間キャッシュされます
+    const fetchedAt = new Date().toLocaleString("ja-JP", {
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+
+    return { users, fetchedAt };
+  },
+  ["cached-users-with-timestamp"],
+  {
+    revalidate: 900, // 15分（秒単位）
+    tags: ["users"],
   }
-
-  const users = await res.json();
-
-  // new Date()は通常リクエストごとに異なる値を返すが、
-  // "use cache"内では初回実行時の値がキャッシュされる
-  const fetchedAt = new Date().toLocaleString("ja-JP", {
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-
-  return { users, fetchedAt };
-}
+);
 
 export async function CachedUsers() {
   const { users, fetchedAt } = await getCachedUsersWithTimestamp();
