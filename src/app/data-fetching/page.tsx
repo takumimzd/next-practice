@@ -47,21 +47,22 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
           <section className="rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-                Users（キャッシュあり）
+                Users（時刻付きキャッシュ）
               </h2>
               <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800 dark:bg-green-900 dark:text-green-200">
-                CACHED
+                WITH TIMESTAMP
               </span>
             </div>
             <p className="mb-6 text-sm text-zinc-600 dark:text-zinc-400">
-              unstable_cacheを使用したコンポーネント。データと取得時刻が一緒にキャッシュされます（15分間）。
+              &quot;use cache&quot;ディレクティブを使用したコンポーネント。new Date()のような動的な値も含めて、
+              関数の返り値全体がキャッシュされます（デフォルトで15分間）。
             </p>
             <DataErrorBoundary title="Users">
               <Suspense
                 fallback={
                   <LoadingCard
                     title="Users"
-                    badge={{ text: "CACHED", color: "green" }}
+                    badge={{ text: "WITH TIMESTAMP", color: "green" }}
                   />
                 }
               >
@@ -111,34 +112,48 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
           </h3>
           <div className="space-y-3 text-zinc-700 dark:text-zinc-300">
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">unstable_cache:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">cacheComponents設定:</strong>
               <p className="ml-4 text-sm">
-                Next.jsの関数レベルのキャッシュAPI。非同期関数の返り値をキャッシュします。
-                revalidateオプションでキャッシュ期間を指定でき（秒単位）、tagsオプションで手動再検証も可能。
-                new Date()のような動的な値を含む関数でも、関数全体がキャッシュされるため、
-                初回実行時の結果（データと取得時刻）が指定期間キャッシュされます。
+                next.config.tsで<code className="rounded bg-zinc-200 px-1 dark:bg-zinc-800">cacheComponents: true</code>を設定することで、
+                &quot;use cache&quot;ディレクティブを使用したキャッシュが有効になります。
+                この設定により、データフェッチはデフォルトでランタイムに実行され、
+                &quot;use cache&quot;で明示的にマークした部分のみがキャッシュされます。
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">&quot;use cache&quot;ディレクティブとの違い:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">1. &quot;use cache&quot;ディレクティブ（推奨）:</strong>
               <p className="ml-4 text-sm">
-                &quot;use cache&quot;はNext.js 15の実験的機能で、より宣言的にキャッシュを定義できますが、
-                new Date()などの動的な値を含む場合、本番環境でキャッシュが無効化される可能性があります。
-                unstable_cacheは、より低レベルなAPIですが、動的な値を含む関数でも確実にキャッシュできます。
+                Next.js 16で正式リリースされたキャッシュAPI。
+                <strong>ファイルの先頭に配置すると、そのファイル内のすべてのエクスポートがキャッシュされます。</strong>
+                関数やコンポーネント単位でも使用可能。デフォルトで15分間キャッシュされます。
+                <strong>重要：new Date()のような動的な値も、&quot;use cache&quot;内で使用すれば、
+                初回実行時の値がキャッシュされます。</strong>
+                最もシンプルな使い方は、ファイル先頭に&quot;use cache&quot;を配置するだけです。
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">cache: &apos;no-store&apos;:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">2. cache: &apos;no-store&apos;（動的データ）:</strong>
               <p className="ml-4 text-sm">
-                fetchオプションでキャッシュを無効化します。ユーザー固有のTodosのような動的データに適しています。
-                Next.js 15以降、fetchのデフォルトは&apos;no-cache&apos;になりました。
+                fetchオプションでキャッシュを完全に無効化します。ユーザー固有のTodosのような動的データに適しています。
+                cacheComponents: true の環境では、デフォルトでキャッシュされないため、
+                特に指定しなくても動的データは毎回フェッチされます。
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">revalidateTag():</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">3. cacheLife()とcacheTag()（オプション）:</strong>
               <p className="ml-4 text-sm">
-                unstable_cacheのtagsオプションで指定したタグを使用して、手動でキャッシュを再検証できます。
-                例: revalidateTag(&apos;users&apos;)でusersタグの付いたキャッシュをすべて無効化します。
+                &quot;use cache&quot;と組み合わせて使用。cacheLife()でキャッシュ期間をカスタマイズ
+                （&quot;seconds&quot;、&quot;minutes&quot;、&quot;hours&quot;、&quot;days&quot;、&quot;weeks&quot;など）。
+                cacheTag()でタグを付与し、revalidateTag()で手動再検証が可能です。
+                省略した場合はデフォルトで15分間キャッシュされます。
+              </p>
+            </div>
+            <div>
+              <strong className="text-emerald-800 dark:text-emerald-200">4. 動的関数の制限:</strong>
+              <p className="ml-4 text-sm">
+                &quot;use cache&quot;内では、cookies()、headers()などのNext.jsの動的関数は使用できません。
+                これらはリクエストごとに異なる値を持つため、キャッシュと相性が悪く、エラーになります。
+                new Date()などのJavaScript標準の動的な値は検出されないため、意図的に使う場合は注意が必要です。
               </p>
             </div>
           </div>
