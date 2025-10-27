@@ -117,6 +117,13 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </p>
             </div>
             <div>
+              <strong className="text-emerald-800 dark:text-emerald-200">cache: &apos;force-cache&apos;:</strong>
+              <p className="ml-4 text-sm">
+                fetchオプションで明示的にキャッシュを有効化します。Next.js 15以降ではfetchのデフォルトが&apos;no-cache&apos;になったため、
+                本番環境でキャッシュを機能させるには明示的な指定が必要です。
+              </p>
+            </div>
+            <div>
               <strong className="text-emerald-800 dark:text-emerald-200">cache: &apos;no-store&apos;:</strong>
               <p className="ml-4 text-sm">
                 fetchオプションでキャッシュを無効化します。ユーザー固有のTodosのような動的データに適しています。
@@ -125,7 +132,7 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
             <div>
               <strong className="text-emerald-800 dark:text-emerald-200">revalidate:</strong>
               <p className="ml-4 text-sm">
-                特定の秒数後にキャッシュを再検証できます（例: revalidate: 60で60秒ごと）
+                特定の秒数後にキャッシュを再検証できます（例: next: &#123; revalidate: 60 &#125;で60秒ごと）
               </p>
             </div>
           </div>
