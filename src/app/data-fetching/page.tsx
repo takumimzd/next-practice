@@ -54,7 +54,7 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </span>
             </div>
             <p className="mb-6 text-sm text-zinc-600 dark:text-zinc-400">
-              &quot;use cache&quot;を使用したコンポーネント。データがキャッシュされます。
+              &quot;use cache&quot;を使用したコンポーネント。データと取得時刻が一緒にキャッシュされます（15分間）。
             </p>
             <DataErrorBoundary title="Users">
               <Suspense
@@ -69,7 +69,7 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </Suspense>
             </DataErrorBoundary>
             <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-500">
-              💡 ページをリロードしても同じ取得時刻が表示されます
+              💡 ページをリロードしても同じ取得時刻が表示されます（15分間キャッシュ）
             </p>
           </section>
 
@@ -113,26 +113,30 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
             <div>
               <strong className="text-emerald-800 dark:text-emerald-200">&quot;use cache&quot;ディレクティブ:</strong>
               <p className="ml-4 text-sm">
-                コンポーネント全体の出力をキャッシュします。ユーザーリストのような変更頻度が低いデータに適しています。
-              </p>
-            </div>
-            <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">cache: &apos;force-cache&apos;:</strong>
-              <p className="ml-4 text-sm">
-                fetchオプションで明示的にキャッシュを有効化します。Next.js 15以降ではfetchのデフォルトが&apos;no-cache&apos;になったため、
-                本番環境でキャッシュを機能させるには明示的な指定が必要です。
+                Next.js 15の新機能。関数やコンポーネントに適用し、返り値全体をキャッシュします。
+                デフォルトで15分間キャッシュされます。データと取得時刻を一緒に返すことで、
+                確実にキャッシュされた結果を表示できます。cacheLife()で期間をカスタマイズ可能です。
               </p>
             </div>
             <div>
               <strong className="text-emerald-800 dark:text-emerald-200">cache: &apos;no-store&apos;:</strong>
               <p className="ml-4 text-sm">
                 fetchオプションでキャッシュを無効化します。ユーザー固有のTodosのような動的データに適しています。
+                Next.js 15以降、fetchのデフォルトは&apos;no-cache&apos;になりました。
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">revalidate:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">cacheTag() / revalidateTag():</strong>
               <p className="ml-4 text-sm">
-                特定の秒数後にキャッシュを再検証できます（例: next: &#123; revalidate: 60 &#125;で60秒ごと）
+                &quot;use cache&quot;と組み合わせて使用。cacheTag()でタグを付与し、
+                revalidateTag()で手動再検証が可能です。
+              </p>
+            </div>
+            <div>
+              <strong className="text-emerald-800 dark:text-emerald-200">cacheLife():</strong>
+              <p className="ml-4 text-sm">
+                キャッシュの有効期間を設定します（例: cacheLife(&quot;hours&quot;)で1時間）。
+                デフォルトは15分です。
               </p>
             </div>
           </div>

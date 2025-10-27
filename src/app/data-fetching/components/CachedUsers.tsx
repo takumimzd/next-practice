@@ -1,5 +1,3 @@
-"use cache";
-
 type User = {
   id: number;
   name: string;
@@ -9,20 +7,22 @@ type User = {
   website: string;
 };
 
-async function fetchUsers(): Promise<User[]> {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users", {
-    cache: "force-cache",
-  });
+type CachedUsersData = {
+  users: User[];
+  fetchedAt: string;
+};
+
+// "use cache"でデータと取得時刻を一緒にキャッシュ
+async function getCachedUsers(): Promise<CachedUsersData> {
+  "use cache";
+
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
 
   if (!res.ok) {
     throw new Error("Failed to fetch users");
   }
 
-  return res.json();
-}
-
-export async function CachedUsers() {
-  const users = await fetchUsers();
+  const users = await res.json();
   const fetchedAt = new Date().toLocaleString("ja-JP", {
     month: "2-digit",
     day: "2-digit",
@@ -31,6 +31,12 @@ export async function CachedUsers() {
     second: "2-digit",
     hour12: false,
   });
+
+  return { users, fetchedAt };
+}
+
+export async function CachedUsers() {
+  const { users, fetchedAt } = await getCachedUsers();
 
   return (
     <div>
