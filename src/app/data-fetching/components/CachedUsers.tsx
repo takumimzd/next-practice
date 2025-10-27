@@ -16,7 +16,9 @@ type CachedUsersData = {
 async function getCachedUsers(): Promise<CachedUsersData> {
   "use cache";
 
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+    cache: "force-cache", // Next.js 15ではfetchのデフォルトがno-cacheなので明示的に指定
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch users");
