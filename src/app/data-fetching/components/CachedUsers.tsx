@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 type User = {
   id: number;
   name: string;
@@ -7,38 +9,41 @@ type User = {
   website: string;
 };
 
-// "use cache"でユーザーデータのみをキャッシュ
-async function getCachedUsers(): Promise<User[]> {
-  "use cache";
+type CachedUsersData = {
+  users: User[];
+  fetchedAt: string;
+};
 
-  const res = await fetch("https://jsonplaceholder.typicode.com/users", {
-    cache: "force-cache", // Next.js 15ではfetchのデフォルトがno-cacheなので明示的に指定
-  });
+// unstable_cacheを使用してデータと取得時刻を一緒にキャッシュ
+const getCachedUsersWithTimestamp = unstable_cache(
+  async (): Promise<CachedUsersData> => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch users");
+    if (!res.ok) {
+      throw new Error("Failed to fetch users");
+    }
+
+    const users = await res.json();
+    const fetchedAt = new Date().toLocaleString("ja-JP", {
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+
+    return { users, fetchedAt };
+  },
+  ["cached-users-with-timestamp"], // キャッシュキー
+  {
+    revalidate: 900, // 15分（秒単位）
+    tags: ["users"],
   }
-
-  return res.json();
-}
-
-// キャッシュされた時刻を取得する関数（こちらもキャッシュ）
-async function getCachedTimestamp(): Promise<string> {
-  "use cache";
-
-  return new Date().toLocaleString("ja-JP", {
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-}
+);
 
 export async function CachedUsers() {
-  const users = await getCachedUsers();
-  const fetchedAt = await getCachedTimestamp();
+  const { users, fetchedAt } = await getCachedUsersWithTimestamp();
 
   return (
     <div>

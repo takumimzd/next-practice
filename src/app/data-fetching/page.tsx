@@ -54,7 +54,7 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </span>
             </div>
             <p className="mb-6 text-sm text-zinc-600 dark:text-zinc-400">
-              &quot;use cache&quot;を使用したコンポーネント。データと取得時刻が一緒にキャッシュされます（15分間）。
+              unstable_cacheを使用したコンポーネント。データと取得時刻が一緒にキャッシュされます（15分間）。
             </p>
             <DataErrorBoundary title="Users">
               <Suspense
@@ -111,11 +111,20 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
           </h3>
           <div className="space-y-3 text-zinc-700 dark:text-zinc-300">
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">&quot;use cache&quot;ディレクティブ:</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">unstable_cache:</strong>
               <p className="ml-4 text-sm">
-                Next.js 15の新機能。関数やコンポーネントに適用し、返り値全体をキャッシュします。
-                デフォルトで15分間キャッシュされます。データと取得時刻を一緒に返すことで、
-                確実にキャッシュされた結果を表示できます。cacheLife()で期間をカスタマイズ可能です。
+                Next.jsの関数レベルのキャッシュAPI。非同期関数の返り値をキャッシュします。
+                revalidateオプションでキャッシュ期間を指定でき（秒単位）、tagsオプションで手動再検証も可能。
+                new Date()のような動的な値を含む関数でも、関数全体がキャッシュされるため、
+                初回実行時の結果（データと取得時刻）が指定期間キャッシュされます。
+              </p>
+            </div>
+            <div>
+              <strong className="text-emerald-800 dark:text-emerald-200">&quot;use cache&quot;ディレクティブとの違い:</strong>
+              <p className="ml-4 text-sm">
+                &quot;use cache&quot;はNext.js 15の実験的機能で、より宣言的にキャッシュを定義できますが、
+                new Date()などの動的な値を含む場合、本番環境でキャッシュが無効化される可能性があります。
+                unstable_cacheは、より低レベルなAPIですが、動的な値を含む関数でも確実にキャッシュできます。
               </p>
             </div>
             <div>
@@ -126,17 +135,10 @@ export default async function DataFetchingPage({ searchParams }: PageProps) {
               </p>
             </div>
             <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">cacheTag() / revalidateTag():</strong>
+              <strong className="text-emerald-800 dark:text-emerald-200">revalidateTag():</strong>
               <p className="ml-4 text-sm">
-                &quot;use cache&quot;と組み合わせて使用。cacheTag()でタグを付与し、
-                revalidateTag()で手動再検証が可能です。
-              </p>
-            </div>
-            <div>
-              <strong className="text-emerald-800 dark:text-emerald-200">cacheLife():</strong>
-              <p className="ml-4 text-sm">
-                キャッシュの有効期間を設定します（例: cacheLife(&quot;hours&quot;)で1時間）。
-                デフォルトは15分です。
+                unstable_cacheのtagsオプションで指定したタグを使用して、手動でキャッシュを再検証できます。
+                例: revalidateTag(&apos;users&apos;)でusersタグの付いたキャッシュをすべて無効化します。
               </p>
             </div>
           </div>
