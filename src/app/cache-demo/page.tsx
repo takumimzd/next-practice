@@ -28,13 +28,13 @@ export default function CacheDemoPage() {
               1. キャッシュされるコンポーネント
             </h2>
             <p className="mb-4 text-zinc-600 dark:text-zinc-400">
-              &quot;use cache&quot;を使用したサーバーコンポーネント。同じ時刻が表示され続けます。
+              &quot;use cache&quot;を使用したサーバーコンポーネント。15分間、同じ時刻が表示され続けます。
             </p>
             <div className="rounded-md bg-zinc-100 p-4 dark:bg-zinc-900">
               <CachedTimeDisplay />
             </div>
             <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-500">
-              💡 ページをリロードしても同じ時刻が表示されます（キャッシュされているため）
+              💡 ページをリロードしても同じ時刻が表示されます（15分間キャッシュされているため）
             </p>
           </section>
 
@@ -75,7 +75,9 @@ export default function CacheDemoPage() {
             </h3>
             <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
               <li>
-                <strong>&quot;use cache&quot;</strong>: コンポーネントの出力をキャッシュし、再レンダリング時に再利用します
+                <strong>&quot;use cache&quot;</strong>: 関数やコンポーネントの出力をキャッシュします。
+                デフォルトで15分間キャッシュされ、その後自動的に再検証されます。
+                cacheLife()で期間をカスタマイズできます。
               </li>
               <li>
                 <strong>動的API</strong>: cookies()、headers()、searchParamsなどを使用すると自動的にキャッシュが無効化されます

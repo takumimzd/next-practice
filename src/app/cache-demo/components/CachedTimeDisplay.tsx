@@ -25,7 +25,7 @@ export async function CachedTimeDisplay() {
         {currentTime}
       </div>
       <div className="mt-2 text-xs text-zinc-500 dark:text-zinc-500">
-        コンポーネントレンダリング時刻（キャッシュされます）
+        コンポーネントレンダリング時刻（15分間キャッシュされます）
       </div>
     </div>
   );
