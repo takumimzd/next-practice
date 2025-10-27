@@ -84,6 +84,24 @@ export default function Home() {
             </ul>
           </Link>
 
+          {/* Pagination Demo */}
+          <Link
+            href="/pagination-demo"
+            className="group block rounded-lg border border-zinc-200 bg-white p-6 transition-all hover:border-zinc-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
+          >
+            <h2 className="mb-2 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+              SSR + SWR Pagination
+            </h2>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              初期表示はサーバー側、ページネーションはSWRでクライアント側
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-zinc-500 dark:text-zinc-500">
+              <li>• Server ComponentでSSR</li>
+              <li>• SWRでクライアント側ページネーション</li>
+              <li>• ハイブリッドアプローチ</li>
+            </ul>
+          </Link>
+
           {/* use Hook Demo */}
           <Link
             href="/use-hook-demo"
