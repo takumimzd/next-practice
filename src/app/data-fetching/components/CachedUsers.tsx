@@ -7,13 +7,8 @@ type User = {
   website: string;
 };
 
-type CachedUsersData = {
-  users: User[];
-  fetchedAt: string;
-};
-
-// "use cache"でデータと取得時刻を一緒にキャッシュ
-async function getCachedUsers(): Promise<CachedUsersData> {
+// "use cache"でユーザーデータのみをキャッシュ
+async function getCachedUsers(): Promise<User[]> {
   "use cache";
 
   const res = await fetch("https://jsonplaceholder.typicode.com/users", {
@@ -24,8 +19,14 @@ async function getCachedUsers(): Promise<CachedUsersData> {
     throw new Error("Failed to fetch users");
   }
 
-  const users = await res.json();
-  const fetchedAt = new Date().toLocaleString("ja-JP", {
+  return res.json();
+}
+
+// キャッシュされた時刻を取得する関数（こちらもキャッシュ）
+async function getCachedTimestamp(): Promise<string> {
+  "use cache";
+
+  return new Date().toLocaleString("ja-JP", {
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
@@ -33,12 +34,11 @@ async function getCachedUsers(): Promise<CachedUsersData> {
     second: "2-digit",
     hour12: false,
   });
-
-  return { users, fetchedAt };
 }
 
 export async function CachedUsers() {
-  const { users, fetchedAt } = await getCachedUsers();
+  const users = await getCachedUsers();
+  const fetchedAt = await getCachedTimestamp();
 
   return (
     <div>
