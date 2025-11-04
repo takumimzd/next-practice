@@ -2,54 +2,73 @@ import Link from 'next/link'
 
 export default function BasicRoutingPage() {
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">📄 Basic Page Routing</h1>
+    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-zinc-900">
+      <main className="mx-auto max-w-4xl px-6 py-16">
+        <Link
+          href="/routing-demo"
+          className="mb-8 inline-block text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+        >
+          ← Back to Routing Demo
+        </Link>
 
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-3">概要</h2>
-          <p className="mb-4">
-            Next.js App Routerでは、<code className="bg-white px-2 py-1 rounded">page.tsx</code>
+        <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+          📄 Basic Page Routing
+        </h1>
+
+        <section className="mb-8 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-900 dark:bg-blue-950">
+          <h2 className="mb-3 text-xl font-semibold text-blue-900 dark:text-blue-50">
+            概要
+          </h2>
+          <p className="mb-4 text-blue-900 dark:text-blue-100">
+            Next.js App Routerでは、<code className="bg-white px-2 py-1 rounded text-blue-800 dark:bg-blue-900 dark:text-blue-200">page.tsx</code>
             ファイルを作成することで、そのディレクトリ名がURLのパスとして公開されます。
           </p>
-          <p className="text-sm text-gray-700">
-            このページは <code className="bg-white px-2 py-1 rounded">/routing-demo/basic/page.tsx</code> にあるため、
-            <code className="bg-white px-2 py-1 rounded">/routing-demo/basic</code> でアクセスできます。
+          <p className="text-sm text-blue-800 dark:text-blue-200">
+            このページは <code className="bg-white px-2 py-1 rounded dark:bg-blue-900">/routing-demo/basic/page.tsx</code> にあるため、
+            <code className="bg-white px-2 py-1 rounded dark:bg-blue-900">/routing-demo/basic</code> でアクセスできます。
           </p>
-        </div>
+        </section>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">ファイル構造</h2>
-          <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto">
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+            ファイル構造
+          </h2>
+          <pre className="overflow-x-auto rounded bg-zinc-900 p-4 text-zinc-100 dark:bg-zinc-800">
 {`app/
 └── routing-demo/
     └── basic/
         └── page.tsx  ← このファイル`}
           </pre>
-        </div>
+        </section>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">基本的なナビゲーション</h2>
-          <p className="mb-4">Linkコンポーネントを使って他のページへ遷移できます：</p>
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+            基本的なナビゲーション
+          </h2>
+          <p className="mb-4 text-zinc-600 dark:text-zinc-400">
+            Linkコンポーネントを使って他のページへ遷移できます：
+          </p>
           <div className="space-y-3">
             <Link
               href="/routing-demo/basic/about"
-              className="block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center"
+              className="block rounded bg-blue-600 px-4 py-2 text-center text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
             >
               About ページへ →
             </Link>
             <Link
               href="/routing-demo/basic/contact"
-              className="block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-center"
+              className="block rounded bg-emerald-600 px-4 py-2 text-center text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600"
             >
               Contact ページへ →
             </Link>
           </div>
-        </div>
+        </section>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">コード例</h2>
-          <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto text-sm">
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+            コード例
+          </h2>
+          <pre className="overflow-x-auto rounded bg-zinc-900 p-4 text-sm text-zinc-100 dark:bg-zinc-800">
 {`import Link from 'next/link'
 
 export default function BasicPage() {
@@ -63,17 +82,8 @@ export default function BasicPage() {
   )
 }`}
           </pre>
-        </div>
-
-        <div className="flex gap-4">
-          <Link
-            href="/routing-demo"
-            className="text-blue-600 hover:underline"
-          >
-            ← ルーティングデモ一覧に戻る
-          </Link>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   )
 }

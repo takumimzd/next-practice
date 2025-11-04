@@ -11,26 +11,39 @@ const photos = [
 
 export default function PhotosPage() {
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">🔄 Intercepting Routing</h1>
+    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-zinc-900">
+      <main className="mx-auto max-w-6xl px-6 py-16">
+        <Link
+          href="/routing-demo"
+          className="mb-8 inline-block text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+        >
+          ← Back to Routing Demo
+        </Link>
 
-        <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-3">概要</h2>
-          <p className="mb-4">
+        <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+          🔄 Intercepting Routing
+        </h1>
+
+        <section className="mb-8 rounded-lg border border-indigo-200 bg-indigo-50 p-6 dark:border-indigo-900 dark:bg-indigo-950">
+          <h2 className="mb-3 text-xl font-semibold text-indigo-900 dark:text-indigo-50">
+            概要
+          </h2>
+          <p className="mb-4 text-indigo-900 dark:text-indigo-100">
             Intercepting Routingは、現在のレイアウト内で別のルートのコンテンツを読み込みます。
             モーダルやオーバーレイUIの実装によく使われます。
           </p>
-          <p className="text-sm text-gray-700">
+          <p className="text-sm text-indigo-800 dark:text-indigo-200">
             以下の写真をクリックすると、同じページ内でモーダルが開きます。
             直接URLにアクセスすると、専用ページとして表示されます。
           </p>
-        </div>
+        </section>
 
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-semibold mb-6">フォトギャラリー</h2>
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+            フォトギャラリー
+          </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+          <div className="mb-8 grid grid-cols-2 md:grid-cols-3 gap-4">
             {photos.map((photo) => (
               <Link
                 key={photo.id}
@@ -48,24 +61,36 @@ export default function PhotosPage() {
             ))}
           </div>
 
-          <div className="border-t pt-6">
-            <h3 className="text-lg font-semibold mb-4">動作の違い</h3>
+          <div className="border-t border-zinc-200 pt-6 dark:border-zinc-700">
+            <h3 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+              動作の違い
+            </h3>
             <div className="space-y-3 text-sm">
-              <div className="bg-green-50 p-4 rounded">
-                <p className="font-semibold mb-1">✅ 写真をクリック（ソフトナビゲーション）</p>
-                <p className="text-gray-700">→ モーダルで表示（Intercepting Routingが発動）</p>
+              <div className="rounded bg-emerald-50 p-4 dark:bg-emerald-950">
+                <p className="mb-1 font-semibold text-emerald-900 dark:text-emerald-100">
+                  ✅ 写真をクリック（ソフトナビゲーション）
+                </p>
+                <p className="text-emerald-800 dark:text-emerald-200">
+                  → モーダルで表示（Intercepting Routingが発動）
+                </p>
               </div>
-              <div className="bg-blue-50 p-4 rounded">
-                <p className="font-semibold mb-1">🔗 URLを直接開く（ハードナビゲーション）</p>
-                <p className="text-gray-700">→ 専用ページとして表示（通常のルーティング）</p>
+              <div className="rounded bg-blue-50 p-4 dark:bg-blue-950">
+                <p className="mb-1 font-semibold text-blue-900 dark:text-blue-100">
+                  🔗 URLを直接開く（ハードナビゲーション）
+                </p>
+                <p className="text-blue-800 dark:text-blue-200">
+                  → 専用ページとして表示（通常のルーティング）
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">ファイル構造</h2>
-          <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto text-sm">
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+            ファイル構造
+          </h2>
+          <pre className="overflow-x-auto rounded bg-zinc-900 p-4 text-sm text-zinc-100 dark:bg-zinc-800">
 {`app/
 └── routing-demo/
     └── intercepting/
@@ -79,37 +104,32 @@ export default function PhotosPage() {
             └── [id]/
                 └── page.tsx      ← 写真詳細（専用ページ）`}
           </pre>
-        </div>
+        </section>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">インターセプト記法</h2>
-          <div className="space-y-3 text-sm">
+        <section className="rounded-lg border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-amber-950">
+          <h2 className="mb-4 text-xl font-semibold text-amber-900 dark:text-amber-50">
+            インターセプト記法
+          </h2>
+          <div className="space-y-3 text-sm text-amber-900 dark:text-amber-100">
             <div className="flex items-start gap-3">
-              <code className="bg-gray-100 px-2 py-1 rounded font-mono">(.)</code>
+              <code className="rounded bg-white px-2 py-1 font-mono dark:bg-amber-900">(.)</code>
               <span>同じ階層のセグメントをマッチ</span>
             </div>
             <div className="flex items-start gap-3">
-              <code className="bg-gray-100 px-2 py-1 rounded font-mono">(..)</code>
+              <code className="rounded bg-white px-2 py-1 font-mono dark:bg-amber-900">(..)</code>
               <span>1つ上の階層のセグメントをマッチ</span>
             </div>
             <div className="flex items-start gap-3">
-              <code className="bg-gray-100 px-2 py-1 rounded font-mono">(..)(..)</code>
+              <code className="rounded bg-white px-2 py-1 font-mono dark:bg-amber-900">(..)(..)</code>
               <span>2つ上の階層のセグメントをマッチ</span>
             </div>
             <div className="flex items-start gap-3">
-              <code className="bg-gray-100 px-2 py-1 rounded font-mono">(...)</code>
+              <code className="rounded bg-white px-2 py-1 font-mono dark:bg-amber-900">(...)</code>
               <span>ルートからのセグメントをマッチ</span>
             </div>
           </div>
-        </div>
-
-        <Link
-          href="/routing-demo"
-          className="text-blue-600 hover:underline"
-        >
-          ← ルーティングデモ一覧に戻る
-        </Link>
-      </div>
+        </section>
+      </main>
     </div>
   )
 }

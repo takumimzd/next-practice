@@ -10,39 +10,54 @@ export default async function WithLoadingPage() {
   await delay(3000)
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Loading のデモ</h1>
+    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-zinc-900">
+      <main className="mx-auto max-w-4xl px-6 py-16">
+        <Link
+          href="/routing-demo/special-files"
+          className="mb-8 inline-block text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+        >
+          ← Back to Special Files
+        </Link>
 
-        <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-3">✅ データ読み込み完了</h2>
-          <p className="mb-2">
+        <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+          Loading のデモ
+        </h1>
+
+        <section className="mb-8 rounded-lg border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
+          <h2 className="mb-3 text-xl font-semibold text-emerald-900 dark:text-emerald-50">
+            ✅ データ読み込み完了
+          </h2>
+          <p className="mb-2 text-emerald-900 dark:text-emerald-100">
             このページは3秒間のデータ取得をシミュレートしています。
           </p>
-          <p className="text-sm text-gray-700">
+          <p className="text-sm text-emerald-800 dark:text-emerald-200">
             ページに遷移すると、loading.tsx で定義したローディングUIが表示され、
             データ取得が完了すると自動的にこのコンテンツに切り替わります。
           </p>
-        </div>
+        </section>
 
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-2xl font-semibold mb-4">読み込まれたデータ</h2>
+        <section className="mb-6 rounded-lg border border-zinc-200 bg-white p-6 shadow-lg dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+            読み込まれたデータ
+          </h2>
           <div className="grid gap-4">
             {[1, 2, 3, 4, 5].map((item) => (
-              <div key={item} className="border rounded-lg p-4 hover:bg-gray-50">
-                <h3 className="font-semibold mb-2">アイテム #{item}</h3>
-                <p className="text-gray-600 text-sm">
+              <div key={item} className="border rounded-lg p-4 hover:bg-zinc-50 border-zinc-200 dark:border-zinc-700 dark:hover:bg-zinc-800">
+                <h3 className="font-semibold mb-2 text-zinc-900 dark:text-zinc-50">アイテム #{item}</h3>
+                <p className="text-zinc-600 text-sm dark:text-zinc-400">
                   これはサーバーサイドで取得されたデータです。
                   loading.tsx のおかげで、ユーザーは待機中もUIを確認できます。
                 </p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">loading.tsx コード例</h2>
-          <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto text-sm">
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+            loading.tsx コード例
+          </h2>
+          <pre className="overflow-x-auto rounded bg-zinc-900 p-4 text-sm text-zinc-100 dark:bg-zinc-800">
 {`export default function Loading() {
   return (
     <div className="animate-pulse">
@@ -55,33 +70,20 @@ export default async function WithLoadingPage() {
   )
 }`}
           </pre>
-        </div>
+        </section>
 
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
-          <h3 className="text-lg font-semibold mb-3">💡 ポイント</h3>
-          <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
+        <section className="mb-8 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-900 dark:bg-blue-950">
+          <h3 className="mb-3 text-lg font-semibold text-blue-900 dark:text-blue-50">
+            💡 ポイント
+          </h3>
+          <ul className="list-disc list-inside space-y-2 text-sm text-blue-800 dark:text-blue-200">
             <li>loading.tsx は自動的に Suspense でラップされます</li>
             <li>非同期のpage.tsxがレンダリング中に表示されます</li>
             <li>スケルトンUIを実装することで、UXが向上します</li>
             <li>このページをリロードすると、再度ローディングUIが表示されます</li>
           </ul>
-        </div>
-
-        <div className="flex gap-4">
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          >
-            ページをリロード（ローディングを再表示）
-          </button>
-          <Link
-            href="/routing-demo/special-files"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            ← 戻る
-          </Link>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   )
 }

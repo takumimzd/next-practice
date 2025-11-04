@@ -2,22 +2,33 @@ import Link from 'next/link'
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Contact ページ</h1>
+    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-zinc-900">
+      <main className="mx-auto max-w-4xl px-6 py-16">
+        <Link
+          href="/routing-demo/basic"
+          className="mb-8 inline-block text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+        >
+          ← Back to Basic Routing
+        </Link>
 
-        <div className="bg-purple-50 border-l-4 border-purple-500 p-6 mb-8">
-          <p className="mb-3">
-            このページは <code className="bg-white px-2 py-1 rounded">/routing-demo/basic/contact/page.tsx</code> にあります。
-          </p>
-          <p className="text-sm text-gray-700">
-            URL: <code className="bg-white px-2 py-1 rounded">/routing-demo/basic/contact</code>
-          </p>
-        </div>
+        <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+          Contact ページ
+        </h1>
 
-        <div className="border rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">ファイル構造</h2>
-          <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto">
+        <section className="mb-8 rounded-lg border border-purple-200 bg-purple-50 p-6 dark:border-purple-900 dark:bg-purple-950">
+          <p className="mb-3 text-purple-900 dark:text-purple-100">
+            このページは <code className="bg-white px-2 py-1 rounded text-purple-800 dark:bg-purple-900 dark:text-purple-200">/routing-demo/basic/contact/page.tsx</code> にあります。
+          </p>
+          <p className="text-sm text-purple-800 dark:text-purple-200">
+            URL: <code className="bg-white px-2 py-1 rounded dark:bg-purple-900">/routing-demo/basic/contact</code>
+          </p>
+        </section>
+
+        <section className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+            ファイル構造
+          </h2>
+          <pre className="overflow-x-auto rounded bg-zinc-900 p-4 text-zinc-100 dark:bg-zinc-800">
 {`app/
 └── routing-demo/
     └── basic/
@@ -27,23 +38,23 @@ export default function ContactPage() {
         └── contact/
             └── page.tsx  ← このファイル`}
           </pre>
-        </div>
+        </section>
 
         <div className="space-y-3">
           <Link
             href="/routing-demo/basic"
-            className="block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center"
+            className="block rounded bg-blue-600 px-4 py-2 text-center text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             ← Basic ページに戻る
           </Link>
           <Link
             href="/routing-demo/basic/about"
-            className="block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-center"
+            className="block rounded bg-emerald-600 px-4 py-2 text-center text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600"
           >
             About ページへ →
           </Link>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

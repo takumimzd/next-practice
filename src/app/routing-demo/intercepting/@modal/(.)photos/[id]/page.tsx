@@ -40,26 +40,26 @@ export default function PhotoModal({ params }: PhotoModalProps) {
       onClick={() => router.back()}
     >
       <div
-        className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white dark:bg-zinc-950 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-zinc-200 dark:border-zinc-800"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">{photo.title}</h2>
+        <div className="sticky top-0 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">{photo.title}</h2>
           <button
             onClick={() => router.back()}
-            className="text-gray-500 hover:text-gray-700 text-3xl leading-none"
+            className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 text-3xl leading-none"
           >
             ×
           </button>
         </div>
 
         <div className="p-6">
-          <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
-            <h3 className="font-semibold mb-2">✨ モーダル表示中</h3>
-            <p className="text-sm text-gray-700">
-              このモーダルは <code className="bg-white px-2 py-1 rounded">@modal/(.)photos/[id]/page.tsx</code> から読み込まれています。
+          <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 mb-6 dark:bg-emerald-950 dark:border-emerald-700">
+            <h3 className="font-semibold mb-2 text-emerald-900 dark:text-emerald-50">✨ モーダル表示中</h3>
+            <p className="text-sm text-emerald-800 dark:text-emerald-200">
+              このモーダルは <code className="bg-white px-2 py-1 rounded dark:bg-emerald-900">@modal/(.)photos/[id]/page.tsx</code> から読み込まれています。
             </p>
-            <p className="text-sm text-gray-700 mt-2">
+            <p className="text-sm text-emerald-800 dark:text-emerald-200 mt-2">
               Intercepting Routingにより、ギャラリーからの遷移をインターセプトしてモーダルで表示しています。
             </p>
           </div>
@@ -73,27 +73,27 @@ export default function PhotoModal({ params }: PhotoModalProps) {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">詳細情報</h3>
-            <p className="text-gray-700 mb-4">{photo.description}</p>
+            <h3 className="text-lg font-semibold mb-2 text-zinc-900 dark:text-zinc-50">詳細情報</h3>
+            <p className="text-zinc-700 dark:text-zinc-300 mb-4">{photo.description}</p>
             <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-gray-600">Photo ID</p>
-                <p className="font-semibold">{photo.id}</p>
+              <div className="bg-zinc-100 dark:bg-zinc-800 p-3 rounded">
+                <p className="text-zinc-600 dark:text-zinc-400">Photo ID</p>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{photo.id}</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-gray-600">Category</p>
-                <p className="font-semibold">自然・風景</p>
+              <div className="bg-zinc-100 dark:bg-zinc-800 p-3 rounded">
+                <p className="text-zinc-600 dark:text-zinc-400">Category</p>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">自然・風景</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded">
-            <h3 className="font-semibold mb-2">💡 試してみよう</h3>
-            <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+          <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded">
+            <h3 className="font-semibold mb-2 text-blue-900 dark:text-blue-50">💡 試してみよう</h3>
+            <ul className="list-disc list-inside space-y-1 text-sm text-blue-800 dark:text-blue-200">
               <li>このモーダルを閉じて、別の写真をクリックしてみてください</li>
               <li>
                 URLを新しいタブで開くと、専用ページとして表示されます:<br/>
-                <code className="bg-white px-2 py-1 rounded text-xs">/routing-demo/intercepting/photos/{photo.id}</code>
+                <code className="bg-white dark:bg-blue-900 px-2 py-1 rounded text-xs">/routing-demo/intercepting/photos/{photo.id}</code>
               </li>
             </ul>
           </div>

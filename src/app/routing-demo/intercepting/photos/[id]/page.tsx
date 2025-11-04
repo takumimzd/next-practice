@@ -24,29 +24,33 @@ export default async function PhotoDetailPage({ params }: PhotoDetailPageProps) 
   }
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen bg-zinc-50 font-sans dark:bg-zinc-900">
+      <main className="mx-auto max-w-4xl px-6 py-16">
+        <div className="rounded-lg border border-zinc-200 bg-white p-8 shadow-lg dark:border-zinc-800 dark:bg-zinc-950">
           <div className="mb-6">
             <Link
               href="/routing-demo/intercepting/photos"
-              className="text-blue-600 hover:underline"
+              className="text-blue-600 hover:underline dark:text-blue-400"
             >
               ← ギャラリーに戻る
             </Link>
           </div>
 
-          <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 mb-6">
-            <h2 className="text-lg font-semibold mb-2">📄 専用ページとして表示中</h2>
-            <p className="text-sm text-gray-700">
-              このページは <code className="bg-white px-2 py-1 rounded">/photos/{id}/page.tsx</code> から読み込まれています。
+          <section className="mb-6 rounded-lg border-l-4 border-amber-500 bg-amber-50 p-6 dark:border-amber-700 dark:bg-amber-950">
+            <h2 className="mb-2 text-lg font-semibold text-amber-900 dark:text-amber-50">
+              📄 専用ページとして表示中
+            </h2>
+            <p className="mb-2 text-sm text-amber-800 dark:text-amber-200">
+              このページは <code className="rounded bg-white px-2 py-1 dark:bg-amber-900">/photos/{id}/page.tsx</code> から読み込まれています。
             </p>
-            <p className="text-sm text-gray-700 mt-2">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
               ギャラリーから遷移した場合はモーダルで表示されますが、URLを直接開いた場合はこの専用ページが表示されます。
             </p>
-          </div>
+          </section>
 
-          <h1 className="text-3xl font-bold mb-4">{photo.title}</h1>
+          <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+            {photo.title}
+          </h1>
 
           <div className={`${photo.color} rounded-lg aspect-video flex items-center justify-center text-white mb-6`}>
             <div className="text-center">
@@ -57,38 +61,42 @@ export default async function PhotoDetailPage({ params }: PhotoDetailPageProps) 
           </div>
 
           <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-3">詳細情報</h2>
-            <p className="text-gray-700 mb-4">{photo.description}</p>
+            <h2 className="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+              詳細情報
+            </h2>
+            <p className="mb-4 text-zinc-700 dark:text-zinc-300">{photo.description}</p>
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-gray-600">Photo ID</p>
-                <p className="font-semibold">{photo.id}</p>
+              <div className="rounded bg-zinc-100 p-3 dark:bg-zinc-800">
+                <p className="text-zinc-600 dark:text-zinc-400">Photo ID</p>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">{photo.id}</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-gray-600">Category</p>
-                <p className="font-semibold">自然・風景</p>
+              <div className="rounded bg-zinc-100 p-3 dark:bg-zinc-800">
+                <p className="text-zinc-600 dark:text-zinc-400">Category</p>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">自然・風景</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-gray-600">Date</p>
-                <p className="font-semibold">2024-01-15</p>
+              <div className="rounded bg-zinc-100 p-3 dark:bg-zinc-800">
+                <p className="text-zinc-600 dark:text-zinc-400">Date</p>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">2024-01-15</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded">
-                <p className="text-gray-600">Resolution</p>
-                <p className="font-semibold">1920x1080</p>
+              <div className="rounded bg-zinc-100 p-3 dark:bg-zinc-800">
+                <p className="text-zinc-600 dark:text-zinc-400">Resolution</p>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-50">1920x1080</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6">
-            <h3 className="font-semibold mb-2">💡 ポイント</h3>
-            <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+          <section className="rounded-lg border-l-4 border-blue-500 bg-blue-50 p-6 dark:border-blue-700 dark:bg-blue-950">
+            <h3 className="mb-2 font-semibold text-blue-900 dark:text-blue-50">
+              💡 ポイント
+            </h3>
+            <ul className="list-disc list-inside space-y-1 text-sm text-blue-800 dark:text-blue-200">
               <li>この専用ページは、URLを直接開いたときに表示されます</li>
               <li>ギャラリーからクリックした場合は、モーダルでインターセプトされます</li>
               <li>これにより、同じコンテンツを2つの異なる方法で表示できます</li>
             </ul>
-          </div>
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   )
 }
